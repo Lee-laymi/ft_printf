@@ -6,26 +6,28 @@
 #    By: skrairab <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/21 20:06:15 by skrairab          #+#    #+#              #
-#    Updated: 2022/06/01 20:56:54 by skrairab         ###   ########.fr        #
+#    Updated: 2022/06/07 02:00:33 by skrairab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = 
+SRCS = ft_printf.c
 
 NAME = libftprintf.a
 
-SRCS = $(SRCS)
+#SRCS = $(SRCS)
 
-OBJS = $(SRCS: .c=o)
+#OBJS = $(SRCS:%.c=o)
+OBJS = ft_printf.o
 
 CC = gcc
 
 CC_FLAGS = -c -Wall -Wextra -Werror
 
-%.o:%.c
-	$(CC) $(CC_FLAGE) -c $< -o $@
+#%.o:%.c
+#	$(CC) $(CC_FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
+	$(CC) $(CC_FLAGS) $(SRCS)
 	ar -rcs $(NAME) $(OBJS)
 
 all: $(NAME)
