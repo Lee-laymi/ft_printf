@@ -6,7 +6,7 @@
 /*   By: skrairab <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 20:18:29 by skrairab          #+#    #+#             */
-/*   Updated: 2022/06/07 22:49:59 by skrairab         ###   ########.fr       */
+/*   Updated: 2022/06/07 23:22:10 by skrairab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ int	ft_putnbrD(int nb)
 		i += ft_putchar('-');
 		i += ft_putnbrD(-n);
 	}
-	else if (n >= 10)
+	else if (n < 10)
+		i += ft_putchar(n + '0');
+	else
 	{
 		i += ft_putnbrD(n / 10);
 		i += ft_putnbrD(n % 10);
 	}
-	else
-		i += ft_putchar(n + '0');
 	return (i);
 }
 
@@ -72,7 +72,7 @@ int	ft_putnbrH(unsigned int n, unsigned int base, char t)
 	{
 		if (t == 'x' || t == 'u' || t == 'p')
 			i += write(1, &"0123456789abcdef"[n], 1);
-		else if (t == 'X')
+		else if  (t == 'X')
 			i += write(1, &"0123456789ABCDEF"[n], 1);
 	}
 	return (i);
@@ -99,7 +99,7 @@ int	ft_printf(const char *typ, ...)
 		}
 		else if (*typ == '%' && *(typ + 1) == 'p')
 		{
-			write(1, &"0x", 1);
+			i += write(1, &"0x", 2);
 			i += ft_putnbrH(va_arg(args, unsigned int),16 ,'p');
 			typ++;
 		}
@@ -115,8 +115,7 @@ int	ft_printf(const char *typ, ...)
 		}
 		else if (*typ == '%' && (*(typ + 1) == 'x' || *(typ + 1) == 'X'))
 		{
-			i += ft_putnbrH(va_arg(args, unsigned int),16 ,'x');
-			i += ft_putnbrH(va_arg(args, unsigned int),16 ,'X');
+			i += ft_putnbrH(va_arg(args, unsigned int),16 ,*(typ +1));
 			typ++;
 		}
 		else if (*typ == '%' && *(typ +1) == '%')
@@ -135,11 +134,11 @@ int	ft_printf(const char *typ, ...)
 //int	main(void)
 //{
 
-//	ft_printf("%c\n", '0');
-//	printf("%c\n", '0');
+//	ft_printf("%p\n",(void*)1);
+//	printf("%p\n", (void*)1);
 
-//	ft_printf(" %c\n ", '0');
-//	printf(" %c\n ", '0');
+//	ft_printf(" %x\n ", '0');
+//	printf(" %x\n ", '0');
 
 //	ft_printf(" %c ", '0');
 //	printf(" %c ", '0');
